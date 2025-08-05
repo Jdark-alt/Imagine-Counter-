@@ -25,12 +25,12 @@
         .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            padding: 2rem;
+            padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             border: 1px solid rgba(255, 255, 255, 0.18);
             text-align: center;
-            max-width: 500px;
+            max-width: 400px;
             width: 90%;
         }
 
@@ -50,10 +50,10 @@
         }
 
         .counter-display {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: bold;
             margin: 2rem 0;
-            padding: 1rem;
+            padding: 1.5rem;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -62,175 +62,37 @@
         }
 
         .counter-display.pulse {
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 1rem 0;
-        }
-
-        .add-button, .reset-button {
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Caveat', cursive;
-            font-weight: 600;
-            min-width: 120px;
         }
 
         .add-button {
             background: linear-gradient(45deg, #714B67, #5a3a52);
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.5rem;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 15px 0 rgba(113, 75, 103, 0.4);
+            margin: 1rem;
+            font-family: 'Caveat', cursive;
+            font-weight: 600;
         }
 
-        .reset-button {
-            background: linear-gradient(45deg, #8b6f47, #6d5635);
-            box-shadow: 0 4px 15px 0 rgba(139, 111, 71, 0.4);
-            font-size: 0.9rem;
-            padding: 0.8rem 1.5rem;
-        }
-
-        .add-button:hover {
+        .add-button:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px 0 rgba(113, 75, 103, 0.6);
         }
 
-        .reset-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px 0 rgba(139, 111, 71, 0.6);
-        }
-
-        .add-button:active, .reset-button:active {
+        .add-button:active {
             transform: translateY(0);
         }
 
-        .add-button:disabled, .reset-button:disabled {
+        .add-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
-        }
-
-        .stats {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            margin-top: 0.2rem;
-        }
-
-        .last-updated {
-            text-align: center;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 1rem;
-        }
-
-        .recent-entries {
-            margin-top: 1.5rem;
-        }
-
-        .toggle-details {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Caveat', cursive;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-details:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .entry {
-            background: rgba(255, 255, 255, 0.1);
-            margin: 0.5rem 0;
-            padding: 0.8rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            border-left: 3px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .entry:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateX(5px);
-        }
-
-        .entry.detailed {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        .notification {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background: rgba(46, 204, 113, 0.95);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            font-family: 'Caveat', cursive;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: rgba(231, 76, 60, 0.95);
-        }
-
-        .loading {
-            opacity: 0.7;
         }
 
         .connection-status {
@@ -239,8 +101,9 @@
             right: 20px;
             padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Caveat', cursive;
         }
 
         .connected {
@@ -251,9 +114,14 @@
             background: rgba(231, 76, 60, 0.9);
         }
 
+        .loading {
+            opacity: 0.7;
+            font-size: 1.5rem;
+        }
+
         @media (max-width: 480px) {
             .container {
-                padding: 1.5rem;
+                padding: 2rem;
                 margin: 1rem;
             }
             
@@ -262,7 +130,13 @@
             }
             
             .counter-display {
-                font-size: 3rem;
+                font-size: 4rem;
+                padding: 1rem;
+            }
+            
+            .add-button {
+                padding: 1rem 2rem;
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -272,8 +146,6 @@
         🔴 Connecting...
     </div>
 
-    <div id="notification-container"></div>
-
     <div class="container">
         <h1>Imagine Counter</h1>
         <p class="subtitle">Tracking every "imagine" moment!</p>
@@ -282,58 +154,27 @@
             <div class="loading">Loading...</div>
         </div>
         
-        <div class="button-group">
-            <button class="add-button" id="addButton" onclick="addCount()" disabled>
-                Imagine!
-            </button>
-            <button class="reset-button" id="resetButton" onclick="resetCounter()" disabled title="Reset counter to zero">
-                🔄 Reset
-            </button>
-        </div>
-        
-        <div class="stats">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalCount">0</div>
-                    <div class="stat-label">Total Count</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="todayCount">0</div>
-                    <div class="stat-label">Today</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="averagePerDay">0</div>
-                    <div class="stat-label">Avg/Day</div>
-                </div>
-            </div>
-            <div class="last-updated">Last updated: <span id="lastUpdated">Never</span></div>
-        </div>
-        
-        <div class="recent-entries">
-            <h3 style="margin-bottom: 1rem; opacity: 0.9;">📊 Recent Activity</h3>
-            <div id="recentEntries">No entries yet...</div>
-            <button class="toggle-details" id="toggleDetails" onclick="toggleDetails()">
-                Show More Details
-            </button>
-        </div>
+        <button class="add-button" id="addButton" onclick="addCount()" disabled>
+            Imagine!
+        </button>
     </div>
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        // Import Firebase functions
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, onValue, push, serverTimestamp, query, orderByChild, limitToLast } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, onValue, set, get, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // TODO: Replace with your Firebase config
+        // Your Firebase configuration
         const firebaseConfig = {
-    apiKey: "AIzaSyC7qYJz_aH1og-aL8BJM_HdWqH9IJxxoZU",
-    authDomain: "imagine-counter-app.firebaseapp.com",
-    databaseURL: "https://imagine-counter-app-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "imagine-counter-app",
-    storageBucket: "imagine-counter-app.firebasestorage.app",
-    messagingSenderId: "461349607288",
-    appId: "1:461349607288:web:c1a9eef0d905bb30f7da8d"
-  };
+            apiKey: "AIzaSyC7qYJz_aH1og-aL8BJM_HdWqH9IJxxoZU",
+            authDomain: "imagine-counter-app.firebaseapp.com",
+            databaseURL: "https://imagine-counter-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "imagine-counter-app",
+            storageBucket: "imagine-counter-app.firebasestorage.app",
+            messagingSenderId: "461349607288",
+            appId: "1:461349607288:web:c1a9eef0d905bb30f7da8d"
+        };
 
         // Initialize Firebase
         let app, database;
@@ -343,7 +184,7 @@
             app = initializeApp(firebaseConfig);
             database = getDatabase(app);
             
-            // Connection status
+            // Connection status monitoring
             const connectedRef = ref(database, '.info/connected');
             onValue(connectedRef, (snapshot) => {
                 const connected = snapshot.val();
@@ -354,13 +195,11 @@
                     statusEl.textContent = '🟢 Connected';
                     statusEl.className = 'connection-status connected';
                     addButton.disabled = false;
-                    document.getElementById('resetButton').disabled = false;
                     isConnected = true;
                 } else {
                     statusEl.textContent = '🔴 Disconnected';
                     statusEl.className = 'connection-status disconnected';
                     addButton.disabled = true;
-                    document.getElementById('resetButton').disabled = true;
                     isConnected = false;
                 }
             });
@@ -370,193 +209,43 @@
             onValue(counterRef, (snapshot) => {
                 const count = snapshot.val() || 0;
                 const counterDisplay = document.getElementById('counterDisplay');
-                const totalCount = document.getElementById('totalCount');
                 
                 counterDisplay.textContent = count;
-                totalCount.textContent = count;
                 
-                // Add pulse effect
+                // Add pulse effect when counter updates
                 counterDisplay.classList.add('pulse');
                 setTimeout(() => {
                     counterDisplay.classList.remove('pulse');
                 }, 300);
             });
 
-            // Listen for recent entries and calculate stats
-            const entriesRef = query(ref(database, 'entries'), orderByChild('timestamp'), limitToLast(50));
-            onValue(entriesRef, (snapshot) => {
-                const entries = [];
-                snapshot.forEach((childSnapshot) => {
-                    entries.push(childSnapshot.val());
-                });
-                
-                updateRecentEntries(entries);
-                updateStats(entries);
-            });
-
         } catch (error) {
             console.error('Firebase initialization error:', error);
-            document.getElementById('counterDisplay').innerHTML = '❌ Setup Required';
+            document.getElementById('counterDisplay').innerHTML = '❌ Setup Error';
             document.getElementById('connectionStatus').innerHTML = '🔴 Config Error';
         }
 
-        // Global variables for UI state
-        let showDetailedEntries = false;
-
-        // Helper functions
-        function updateRecentEntries(entries) {
-            const recentEntriesEl = document.getElementById('recentEntries');
-            const lastUpdatedEl = document.getElementById('lastUpdated');
-            
-            if (entries.length === 0) {
-                recentEntriesEl.innerHTML = 'No entries yet...';
-                lastUpdatedEl.textContent = 'Never';
-                return;
-            }
-
-            // Sort by timestamp (most recent first)
-            entries.sort((a, b) => b.timestamp - a.timestamp);
-            const displayEntries = showDetailedEntries ? entries : entries.slice(0, 5);
-            
-            recentEntriesEl.innerHTML = displayEntries.map(entry => {
-                const date = new Date(entry.timestamp);
-                const timeStr = date.toLocaleTimeString();
-                const dateStr = date.toLocaleDateString();
-                const deviceInfo = entry.userAgent ? entry.userAgent.split(' ')[0] : 'Unknown';
-                
-                if (showDetailedEntries) {
-                    return `<div class="entry detailed">📱 ${timeStr} on ${dateStr}<br><small>Device: ${deviceInfo}</small></div>`;
-                } else {
-                    return `<div class="entry">📢 ${timeStr} on ${dateStr}</div>`;
-                }
-            }).join('');
-            
-            // Update last updated time
-            const lastEntry = entries[0];
-            const lastDate = new Date(lastEntry.timestamp);
-            lastUpdatedEl.textContent = lastDate.toLocaleString();
-            
-            // Update toggle button text
-            const toggleBtn = document.getElementById('toggleDetails');
-            toggleBtn.textContent = showDetailedEntries ? 'Show Less' : `Show All (${entries.length})`;
-        }
-
-        function updateStats(entries) {
-            const todayCountEl = document.getElementById('todayCount');
-            const averagePerDayEl = document.getElementById('averagePerDay');
-            
-            if (entries.length === 0) {
-                todayCountEl.textContent = '0';
-                averagePerDayEl.textContent = '0';
-                return;
-            }
-
-            // Calculate today's count
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const todayCount = entries.filter(entry => {
-                const entryDate = new Date(entry.timestamp);
-                entryDate.setHours(0, 0, 0, 0);
-                return entryDate.getTime() === today.getTime();
-            }).length;
-            
-            todayCountEl.textContent = todayCount;
-
-            // Calculate average per day
-            if (entries.length > 0) {
-                const firstEntry = new Date(Math.min(...entries.map(e => e.timestamp)));
-                const daysDiff = Math.max(1, Math.ceil((Date.now() - firstEntry.getTime()) / (1000 * 60 * 60 * 24)));
-                const average = (entries.length / daysDiff).toFixed(1);
-                averagePerDayEl.textContent = average;
-            }
-        }
-
-        function showNotification(message, isError = false) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${isError ? 'error' : ''}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => notification.classList.add('show'), 100);
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 3000);
-        }
-
-        // Global functions
-        window.toggleDetails = function() {
-            showDetailedEntries = !showDetailedEntries;
-            // Trigger a re-render by calling updateRecentEntries with current data
-            const entriesRef = query(ref(database, 'entries'), orderByChild('timestamp'), limitToLast(50));
-            onValue(entriesRef, (snapshot) => {
-                const entries = [];
-                snapshot.forEach((childSnapshot) => {
-                    entries.push(childSnapshot.val());
-                });
-                updateRecentEntries(entries);
-            }, { once: true });
-        };
-
-        // Enhanced add count function
-        window.addCount = function() {
+        // Global function to add count
+        window.addCount = async function() {
             if (!isConnected || !database) {
-                showNotification('Not connected to database!', true);
+                alert('Not connected to database!');
                 return;
             }
 
             try {
-                // Add entry to entries log
-                const entriesRef = ref(database, 'entries');
-                push(entriesRef, {
-                    timestamp: Date.now(),
-                    userAgent: navigator.userAgent.substring(0, 50)
-                });
-
-                // Get current counter and increment
                 const counterRef = ref(database, 'counter');
-                onValue(counterRef, (snapshot) => {
-                    const currentCount = snapshot.val() || 0;
-                    const updates = {};
-                    updates['/counter'] = currentCount + 1;
-                    
-                    import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js')
-                        .then(({ update, ref }) => {
-                            update(ref(database), updates);
-                            showNotification('Imagine counted! 🎉');
-                        });
-                }, { once: true });
-
+                
+                // Get current value and increment
+                const snapshot = await get(counterRef);
+                const currentCount = snapshot.val() || 0;
+                const newCount = currentCount + 1;
+                
+                // Update the counter
+                await set(counterRef, newCount);
+                
             } catch (error) {
                 console.error('Error adding count:', error);
-                showNotification('Error adding count. Please try again.', true);
-            }
-        };
-
-        // Reset counter function
-        window.resetCounter = function() {
-            if (!isConnected || !database) {
-                showNotification('Not connected to database!', true);
-                return;
-            }
-
-            if (confirm('Are you sure you want to reset the counter? This will clear all entries and set the count back to 0.')) {
-                try {
-                    import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js')
-                        .then(({ update, ref, remove }) => {
-                            const updates = {};
-                            updates['/counter'] = 0;
-                            update(ref(database), updates);
-                            
-                            // Also clear entries
-                            remove(ref(database, 'entries'));
-                            
-                            showNotification('Counter reset successfully! 🔄');
-                        });
-                } catch (error) {
-                    console.error('Error resetting counter:', error);
-                    showNotification('Error resetting counter. Please try again.', true);
-                }
+                alert('Error updating counter. Please try again.');
             }
         };
     </script>
