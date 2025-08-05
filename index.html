@@ -119,6 +119,38 @@
             font-size: 1.5rem;
         }
 
+        .reset-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(139, 111, 71, 0.9);
+            border: none;
+            padding: 0.8rem;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px 0 rgba(139, 111, 71, 0.4);
+            font-family: 'Caveat', cursive;
+            font-weight: 600;
+            font-size: 1.2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reset-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(139, 111, 71, 0.6);
+        }
+
+        .reset-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
         @media (max-width: 480px) {
             .container {
                 padding: 2rem;
@@ -145,6 +177,10 @@
     <div class="connection-status disconnected" id="connectionStatus">
         🔴 Connecting...
     </div>
+
+    <button class="reset-button" id="resetButton" onclick="resetCounter()" disabled title="Reset counter to zero">
+        🔄
+    </button>
 
     <div class="container">
         <h1>Imagine Counter</h1>
@@ -195,11 +231,13 @@
                     statusEl.textContent = '🟢 Connected';
                     statusEl.className = 'connection-status connected';
                     addButton.disabled = false;
+                    document.getElementById('resetButton').disabled = false;
                     isConnected = true;
                 } else {
                     statusEl.textContent = '🔴 Disconnected';
                     statusEl.className = 'connection-status disconnected';
                     addButton.disabled = true;
+                    document.getElementById('resetButton').disabled = true;
                     isConnected = false;
                 }
             });
@@ -246,6 +284,24 @@
             } catch (error) {
                 console.error('Error adding count:', error);
                 alert('Error updating counter. Please try again.');
+            }
+        };
+
+        // Global function to reset counter
+        window.resetCounter = async function() {
+            if (!isConnected || !database) {
+                alert('Not connected to database!');
+                return;
+            }
+
+            if (confirm('Are you sure you want to reset the counter to 0?')) {
+                try {
+                    const counterRef = ref(database, 'counter');
+                    await set(counterRef, 0);
+                } catch (error) {
+                    console.error('Error resetting counter:', error);
+                    alert('Error resetting counter. Please try again.');
+                }
             }
         };
     </script>
