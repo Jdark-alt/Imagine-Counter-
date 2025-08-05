@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagine Counter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Caveat', cursive;
+            background: linear-gradient(135deg, #714B67 0%, #5a3a52 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .counter-display {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .counter-display.pulse {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        .add-button {
+            background: linear-gradient(45deg, #714B67, #5a3a52);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px 0 rgba(113, 75, 103, 0.4);
+            margin: 1rem;
+            font-family: 'Caveat', cursive;
+            font-weight: 600;
+        }
+
+        .add-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(113, 75, 103, 0.6);
+        }
+
+        .add-button:active {
+            transform: translateY(0);
+        }
+
+        .stats {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .recent-entries {
+            margin-top: 1rem;
+        }
+
+        .entry {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            opacity: 0.7;
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .connected {
+            background: rgba(46, 204, 113, 0.9);
+        }
+
+        .disconnected {
+            background: rgba(231, 76, 60, 0.9);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .counter-display {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status disconnected" id="connectionStatus">
+        🔴 Connecting...
+    </div>
+
+    <div class="container">
+        <h1>Imagine Counter</h1>
+        <p class="subtitle">Tracking every "imagine" moment!</p>
+        
+        <div class="counter-display" id="counterDisplay">
+            <div class="loading">Loading...</div>
+        </div>
+        
+        <button class="add-button" id="addButton" onclick="addCount()" disabled>
+            Imagine!
+        </button>
+        
+        <div class="stats">
+            <div>Total "Imagine" count: <strong id="totalCount">0</strong></div>
+            <div>Last updated: <span id="lastUpdated">Never</span></div>
+        </div>
+        
+        <div class="recent-entries">
+            <h3>Recent Entries</h3>
+            <div id="recentEntries">No entries yet...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, onValue, push, serverTimestamp, query, orderByChild, limitToLast } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // TODO: Replace with your Firebase config
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        let app, database;
+        let isConnected = false;
+
+        try {
+            app = initializeApp(firebaseConfig);
+            database = getDatabase(app);
+            
+            // Connection status
+            const connectedRef = ref(database, '.info/connected');
+            onValue(connectedRef, (snapshot) => {
+                const connected = snapshot.val();
+                const statusEl = document.getElementById('connectionStatus');
+                const addButton = document.getElementById('addButton');
+                
+                if (connected) {
+                    statusEl.textContent = '🟢 Connected';
+                    statusEl.className = 'connection-status connected';
+                    addButton.disabled = false;
+                    isConnected = true;
+                } else {
+                    statusEl.textContent = '🔴 Disconnected';
+                    statusEl.className = 'connection-status disconnected';
+                    addButton.disabled = true;
+                    isConnected = false;
+                }
+            });
+
+            // Listen for counter updates
+            const counterRef = ref(database, 'counter');
+            onValue(counterRef, (snapshot) => {
+                const count = snapshot.val() || 0;
+                const counterDisplay = document.getElementById('counterDisplay');
+                const totalCount = document.getElementById('totalCount');
+                
+                counterDisplay.textContent = count;
+                totalCount.textContent = count;
+                
+                // Add pulse effect
+                counterDisplay.classList.add('pulse');
+                setTimeout(() => {
+                    counterDisplay.classList.remove('pulse');
+                }, 300);
+            });
+
+            // Listen for recent entries
+            const entriesRef = query(ref(database, 'entries'), orderByChild('timestamp'), limitToLast(5));
+            onValue(entriesRef, (snapshot) => {
+                const entries = [];
+                snapshot.forEach((childSnapshot) => {
+                    entries.push(childSnapshot.val());
+                });
+                
+                const recentEntriesEl = document.getElementById('recentEntries');
+                const lastUpdatedEl = document.getElementById('lastUpdated');
+                
+                if (entries.length === 0) {
+                    recentEntriesEl.innerHTML = 'No entries yet...';
+                    lastUpdatedEl.textContent = 'Never';
+                } else {
+                    // Sort by timestamp (most recent first)
+                    entries.sort((a, b) => b.timestamp - a.timestamp);
+                    
+                    recentEntriesEl.innerHTML = entries.map(entry => {
+                        const date = new Date(entry.timestamp);
+                        const timeStr = date.toLocaleTimeString();
+                        const dateStr = date.toLocaleDateString();
+                        return `<div class="entry">📢 ${timeStr} on ${dateStr}</div>`;
+                    }).join('');
+                    
+                    // Update last updated time
+                    const lastEntry = entries[0];
+                    const lastDate = new Date(lastEntry.timestamp);
+                    lastUpdatedEl.textContent = lastDate.toLocaleString();
+                }
+            });
+
+        } catch (error) {
+            console.error('Firebase initialization error:', error);
+            document.getElementById('counterDisplay').innerHTML = '❌ Setup Required';
+            document.getElementById('connectionStatus').innerHTML = '🔴 Config Error';
+        }
+
+        // Global function to add count
+        window.addCount = function() {
+            if (!isConnected || !database) {
+                alert('Not connected to database!');
+                return;
+            }
+
+            try {
+                // Add entry to entries log
+                const entriesRef = ref(database, 'entries');
+                push(entriesRef, {
+                    timestamp: Date.now(),
+                    userAgent: navigator.userAgent.substring(0, 50) // Basic user identification
+                });
+
+                // Get current counter and increment
+                const counterRef = ref(database, 'counter');
+                onValue(counterRef, (snapshot) => {
+                    const currentCount = snapshot.val() || 0;
+                    const updates = {};
+                    updates['/counter'] = currentCount + 1;
+                    
+                    import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js')
+                        .then(({ update, ref }) => {
+                            update(ref(database), updates);
+                        });
+                }, { once: true });
+
+            } catch (error) {
+                console.error('Error adding count:', error);
+                alert('Error adding count. Please try again.');
+            }
+        };
+    </script>
+</body>
+</html>
